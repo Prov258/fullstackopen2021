@@ -1,0 +1,4 @@
+*/*/node_modules/
+*/*/*vscode/
+part3/phonebook-frontend/build/
+*/*/.env
