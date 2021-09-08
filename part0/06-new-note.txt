@@ -1,0 +1,2 @@
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa JSON{content: "456", date: "2021-09-08T10:40:35.645Z"}
+server-->browser: JSON{"message":"note created"}
