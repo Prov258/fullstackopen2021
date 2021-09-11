@@ -11,6 +11,14 @@ function App() {
   const [neutral, setNeutral] = useState(0);  
   const [bad, setBad] = useState(0);
 
+  const findFeedbackAverage = () => good + neutral + bad
+                                      ? (good - bad) / (good + neutral + bad)
+                                      : 0
+
+  const findPositivePercentage = () => good + neutral + bad 
+                                        ? (good / (good + neutral + bad)) * 100 
+                                        : 0
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -24,6 +32,9 @@ function App() {
         <li>good: {good}</li>
         <li>neutral: {neutral}</li>
         <li>bad: {bad}</li>
+        <li>all : {good + neutral + bad}</li>
+        <li>average: {findFeedbackAverage()}</li>
+        <li>positive: {findPositivePercentage()}%</li>
       </ul>
     </div>
   );
