@@ -16,14 +16,17 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <>
       <h1>statistics</h1>
-      <ul>
-        <li>good: {good}</li>
-        <li>neutral: {neutral}</li>
-        <li>bad: {bad}</li>
-        <li>all : {total}</li>
-        <li>average: {findFeedbackAverage()}</li>
-        <li>positive: {findPositivePercentage()}%</li>
-      </ul>
+      {total ? 
+        <ul>
+          <li>good: {good}</li>
+          <li>neutral: {neutral}</li>
+          <li>bad: {bad}</li>
+          <li>all : {total}</li>
+          <li>average: {findFeedbackAverage()}</li>
+          <li>positive: {findPositivePercentage()}%</li>
+        </ul> : 
+        "No feedback given"
+      }
     </>
   )
 }
