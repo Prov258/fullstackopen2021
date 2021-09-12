@@ -1,29 +1,27 @@
 import React, {useState} from 'react'
 
-const Button = ({ onClick, text }) => {
-  return (
-    <button onClick={onClick} >{text}</button>
-  )
-}
+const Button = ({ onClick, text }) => <button onClick={onClick} >{text}</button>
+
+const StatisticLine = ({ statText, statValue }) => <li>{statText}: {statValue}</li>
 
 const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad;
 
   const findFeedbackAverage = () => total ? (good - bad) / total : 0;
 
-  const findPositivePercentage = () => total ? (good / total) * 100 : 0;
+  const findPositivePercentage = () => total ? ((good / total) * 100) + "%" : "0%";
 
   return (
     <>
       <h1>statistics</h1>
       {total ? 
         <ul>
-          <li>good: {good}</li>
-          <li>neutral: {neutral}</li>
-          <li>bad: {bad}</li>
-          <li>all : {total}</li>
-          <li>average: {findFeedbackAverage()}</li>
-          <li>positive: {findPositivePercentage()}%</li>
+          <StatisticLine statText={"good"} statValue={good} />
+          <StatisticLine statText={"neutral"} statValue={neutral} />
+          <StatisticLine statText={"bad"} statValue={bad} />
+          <StatisticLine statText={"all"} statValue={total} />
+          <StatisticLine statText={"average"} statValue={findFeedbackAverage()} />
+          <StatisticLine statText={"positive"} statValue={findPositivePercentage()} />
         </ul> : 
         "No feedback given"
       }
