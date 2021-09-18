@@ -18,5 +18,14 @@ const create = (newObject) => {
             alert("Something went wrong.", error);
         });
 }
+
+const remove = (id) => {
+    return axios
+        .delete(`${baseUrl}/${id}`)
+        .catch(error => {
+            alert("Something went wrong.", error);
+        });
+}
+
 // eslint-disable-next-line
-export default { getAll, create }
+export default { getAll, create, remove }
