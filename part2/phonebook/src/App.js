@@ -20,12 +20,19 @@ const App = () => {
 
   const submitNumberHandler = (e) => {
     e.preventDefault();
-    if(!persons.find(person => person.name === newName)){
+    const alreadyAddedPerson = persons.find(person => person.name === newName);
+    if(!alreadyAddedPerson){
       numberService
         .create({name: newName, number: newNumber})
         .then(data => setPersons(persons.concat(data)))
     } else {
-      alert(`${newName} is already added to phonebook`);
+      if(window.confirm(`${alreadyAddedPerson.name} is already added to phonebook, replace the old number with a new one?`)){
+        numberService
+          .update(alreadyAddedPerson.id, {...alreadyAddedPerson, number: newNumber})
+          .then(updatedPerson => {
+              setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson))
+          })
+      }
     }
     setNewName('')
     setNewNumber('')

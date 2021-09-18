@@ -27,5 +27,14 @@ const remove = (id) => {
         });
 }
 
+const update = (id, newObject) => {
+    return axios
+        .put(`${baseUrl}/${id}`, newObject)
+        .then(response => response.data)
+        .catch(error => {
+            alert("Something went wrong.", error);
+        });
+}
+
 // eslint-disable-next-line
-export default { getAll, create, remove }
+export default { getAll, create, remove, update }
