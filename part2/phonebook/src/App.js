@@ -45,6 +45,10 @@ const App = () => {
               setPersons(persons.map(person => person.id !== updatedPerson.id ? person : updatedPerson))
               showMessage(`${updatedPerson.name} is changed`)
           })
+          .catch(() => {
+            showMessage(`${alreadyAddedPerson.name} was already removed from server`, "red");
+            setPersons(persons.filter(p => p.id !== alreadyAddedPerson.id))
+          })
       }
     }
     setNewName('')
@@ -53,13 +57,18 @@ const App = () => {
 
   const deleteNumberHandler = (id, name) => {
     if(window.confirm(`Delete ${name} ?`)){
+      const deletedPersonName = persons.find(person => person.id === id).name
       numberService
       .remove(id)
       .then(response => {
         if(response.status === 200){
-          showMessage(`${persons.find(person => person.id === id).name} is deleted`, "red");
+          showMessage(`${deletedPersonName} is deleted`, "red");
           setPersons(persons.filter(person => person.id !== id));
         }
+      })
+      .catch(() => {
+        showMessage(`${deletedPersonName} was already removed from server`, "red");
+        setPersons(persons.filter(p => p.id !== id))
       })
     }
   }
