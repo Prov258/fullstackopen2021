@@ -19,13 +19,7 @@ const create = (newObject) => {
         });
 }
 
-const remove = (id) => {
-    return axios
-        .delete(`${baseUrl}/${id}`)
-        .catch(error => {
-            alert("Something went wrong.", error);
-        });
-}
+const remove = (id) => axios.delete(`${baseUrl}/${id}`)
 
 const update = (id, newObject) => {
     return axios
