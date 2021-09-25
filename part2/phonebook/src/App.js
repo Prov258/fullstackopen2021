@@ -61,7 +61,7 @@ const App = () => {
       numberService
       .remove(id)
       .then(response => {
-        if(response.status === 200){
+        if(response.status === 200 || response.status === 204){
           showMessage(`${deletedPersonName} is deleted`, "red");
           setPersons(persons.filter(person => person.id !== id));
         }
