@@ -37,6 +37,9 @@ const App = () => {
           setPersons(persons.concat(data))
           showMessage(`Added ${newName}`)
         })
+        .catch(err => {
+          showMessage(err.response.data.error, "red")
+        })
     } else {
       if(window.confirm(`${alreadyAddedPerson.name} is already added to phonebook, replace the old number with a new one?`)){
         numberService
