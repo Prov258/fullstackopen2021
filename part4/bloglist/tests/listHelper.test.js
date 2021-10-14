@@ -72,7 +72,7 @@ describe('total likes', () => {
     })
 })
 
-describe('most likes', () => {
+describe('favorite blog', () => {
     test('when list has only one blog, equals the blog of that', () => {
         const result = listHelper.favoriteBlog([blogs[0]])
         expect(result).toEqual(blogs[0])
@@ -87,5 +87,12 @@ describe('most blogs', () => {
     test('show the most blogs number author', () => {
         const result = listHelper.mostBlogs(blogs)
         expect(result).toEqual({ author: "Robert C. Martin", blogs: 3 })
+    })
+})
+
+describe('most likes', () => {
+    test('show the most likes author', () => {
+        const result = listHelper.mostLikes(blogs)
+        expect(result).toEqual({ author: "Edsger W. Dijkstra", likes: 17 })
     })
 })

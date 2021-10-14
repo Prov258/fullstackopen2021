@@ -31,6 +31,29 @@ const mostBlogs = (blogs) => {
     }
 }
 
+const mostLikes = (blogs) => {
+    const reducer = (sum, item) => {
+        if(sum.hasOwnProperty(item.author)){
+            sum[item.author] += item.likes
+        } else {
+            sum[item.author] = item.likes
+        }
+        return sum
+    }
+    const authorsWithLikes = blogs.reduce(reducer, {})
+    const maxValue = Math.max(...Object.values(authorsWithLikes))
+    const maxKey = Object.keys(authorsWithLikes).find(key => authorsWithLikes[key] === maxValue)
+
+    return {
+        author: maxKey,
+        likes: maxValue
+    }
+}
+
 module.exports = {
-    dummy, totalLikes, favoriteBlog, mostBlogs
+    dummy, 
+    totalLikes, 
+    favoriteBlog, 
+    mostBlogs,
+    mostLikes
 }
