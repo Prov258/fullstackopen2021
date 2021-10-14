@@ -12,6 +12,25 @@ const favoriteBlog = (blogs) => {
     return blogs.find(item => item.likes === Math.max(...blogsLikes))
 }
 
+const mostBlogs = (blogs) => {
+    const blogsAuthors = blogs.map(item => item.author)
+    const authorsWithQuantity = {}
+    blogsAuthors.forEach(item => {
+        if(authorsWithQuantity.hasOwnProperty(item)){
+            authorsWithQuantity[item] += 1; 
+        } else{
+            authorsWithQuantity[item] = 1;
+        }
+    })
+    const maxValue = Math.max(...Object.values(authorsWithQuantity))
+    const maxKey = Object.keys(authorsWithQuantity).find(key => authorsWithQuantity[key] === maxValue)
+
+    return {
+        author: maxKey,
+        blogs: maxValue
+    }
+}
+
 module.exports = {
-    dummy, totalLikes, favoriteBlog
+    dummy, totalLikes, favoriteBlog, mostBlogs
 }
