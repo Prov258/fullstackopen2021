@@ -74,6 +74,20 @@ test('if title and url is missing, backend will send code 400', async () => {
         .expect(400)
 })
 
+test('note can be deleted', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogId = blogsAtStart[0].id
+    
+    await api
+        .delete(`/api/blogs/${blogId}`)
+        .expect(204)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd).toHaveLength(blogsAtStart.length - 1)
+    expect(blogsAtEnd).not.toContain(blogsAtStart[0])
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
