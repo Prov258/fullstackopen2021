@@ -45,10 +45,21 @@ test('a valid blog can be added', async () => {
         .expect('Content-Type', /application\/json/)
 
     const blogsAtEnd = await helper.blogsInDb()
-    const titles = blogsAtEnd.map(i => i.title) 
+    const titles = blogsAtEnd.map(i => i.title)
 
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
     expect(titles).toContain('How fast make a pizza')
+})
+
+test('if the likes property is missing, it will default to 0', async () => {
+    const newBlog = {
+        title: 'Without likes',
+        author: 'Some instagirl',
+        url: "https://www.instagram.com",
+    }
+
+    const response = await api.post('/api/blogs').send(newBlog)
+    expect(response.body.likes).toBe(0)
 })
 
 afterAll(() => {
