@@ -1,10 +1,10 @@
 POST http://localhost:3001/api/blogs/
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkJDb20iLCJpZCI6IjYxNmRiZTgxNDRhMjZmYzY4YWUzZDU1YiIsImlhdCI6MTYzNDYyOTM2NH0.OxMYKhvSMAMjJ0HA6JccmsgdayTM9lw4MGoVhlQWVtc
 
 {
-    "title": "Movie reviews 2",
+    "title": "Movie reviews 4",
     "author": "BC",
     "url": "https://www.youtube.com",
-    "likes": 50,
-    "userId": "616dbe8144a26fc68ae3d55b"
+    "likes": 50
 }
