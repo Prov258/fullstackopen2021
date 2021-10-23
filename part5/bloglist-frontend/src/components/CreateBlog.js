@@ -16,6 +16,7 @@ const CreateBlog = (props) => {
       setAuthor('')
       setUrl('')
       props.setBlogs(props.blogs.concat(createdBlog))
+      props.showNotification(`a new blog ${createdBlog.title} by ${createdBlog.author} added`)
 
     } catch(exception){
       alert(exception)

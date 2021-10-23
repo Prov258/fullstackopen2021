@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/loginService'
 
@@ -9,6 +10,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [ notification, setNotification ] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -24,6 +26,13 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  const showNotification = (content, color = "green") => {
+    setNotification({ content, color })
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -41,7 +50,8 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch(exception){
-      alert('Wrong credentials')
+      console.log(exception)
+      showNotification('Wrong credentials', 'red')
     }
   }
 
@@ -54,6 +64,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification notification={notification} />
       {user === null
         ? <LoginForm 
             username={username}
@@ -66,7 +77,8 @@ const App = () => {
             blogs={blogs} 
             user={user} 
             handleLogout={handleLogout} 
-            setBlogs={setBlogs} 
+            setBlogs={setBlogs}
+            showNotification={showNotification} 
           />
       }
     </div>
