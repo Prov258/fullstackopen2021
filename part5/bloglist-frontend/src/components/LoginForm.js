@@ -9,10 +9,10 @@ const LoginForm = (props) => {
             <label>
                 <span>username </span>
                 <input
-                type='text'
-                name='Username'
-                value={props.username}
-                onChange={({ target }) => props.setUsername(target.value)}
+                  type='text'
+                  name='Username'
+                  value={props.username}
+                  onChange={({ target }) => props.setUsername(target.value)}
                 />
             </label>
             </div>
@@ -20,10 +20,10 @@ const LoginForm = (props) => {
             <label>
                 <span>password </span>
                 <input 
-                type='password'
-                name='Password'
-                value={props.password}
-                onChange={({ target }) => props.setPassword(target.value)}
+                  type='password'
+                  name='Password'
+                  value={props.password}
+                  onChange={({ target }) => props.setPassword(target.value)}
                 />
             </label>
             </div>

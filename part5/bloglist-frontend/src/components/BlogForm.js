@@ -1,26 +1,17 @@
 import React, { useState } from 'react'
-import blogService from '../services/blogs'
 
-const CreateBlog = (props) => {
+const BlogForm = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
-  const createBlogHandler = async (e) => {
+  const createBlogHandler = (e) => {
     e.preventDefault()
+    props.addBlog({ title, author, url })
 
-    try{
-      const createdBlog = await blogService.create({ title, author, url })
-
-      setTitle('')
-      setAuthor('')
-      setUrl('')
-      props.setBlogs(props.blogs.concat(createdBlog))
-      props.showNotification(`a new blog ${createdBlog.title} by ${createdBlog.author} added`)
-
-    } catch(exception){
-      alert(exception)
-    }
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   }
 
   return (
@@ -66,4 +57,4 @@ const CreateBlog = (props) => {
   )
 }
 
-export default CreateBlog
+export default BlogForm

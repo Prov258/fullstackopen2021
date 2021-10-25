@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/loginService'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
-  const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [ blogs, setBlogs ] = useState([])
+  const [ user, setUser ] = useState(null)
+  const [ username, setUsername ] = useState('')
+  const [ password, setPassword ] = useState('')
   const [ notification, setNotification ] = useState(null)
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -32,6 +36,13 @@ const App = () => {
     setTimeout(() => {
       setNotification(null)
     }, 5000)
+  }
+
+  const addBlog = async (newBlog) => {
+    const addedBlog = await blogService.create(newBlog)
+    setBlogs(blogs.concat(addedBlog))
+    showNotification(`a new blog ${addedBlog.title} by ${addedBlog.author} added`)
+    blogFormRef.current.toggleVisibility()
   }
 
   const handleLogin = async (e) => {
@@ -64,6 +75,7 @@ const App = () => {
 
   return (
     <div>
+      <h1>Blogs</h1>
       <Notification notification={notification} />
       {user === null
         ? <LoginForm 
@@ -73,13 +85,13 @@ const App = () => {
             setPassword={setPassword}
             handleLogin={handleLogin}
           />
-        : <Blogs 
-            blogs={blogs} 
-            user={user} 
-            handleLogout={handleLogout} 
-            setBlogs={setBlogs}
-            showNotification={showNotification} 
-          />
+        :  <div>
+            <h4>{user.name} logged-in <button onClick={handleLogout}>logout</button></h4>
+            <Togglable buttonLabel='new blog' ref={blogFormRef}>
+              <BlogForm setBlogs={setBlogs} addBlog={addBlog} />
+            </Togglable>
+            <Blogs blogs={blogs} />
+          </div>
       }
     </div>
   )
