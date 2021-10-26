@@ -85,7 +85,7 @@ const App = () => {
             setPassword={setPassword}
             handleLogin={handleLogin}
           />
-        :  <div>
+        : <div>
             <h4>{user.name} logged-in <button onClick={handleLogout}>logout</button></h4>
             <Togglable buttonLabel='new blog' ref={blogFormRef}>
               <BlogForm setBlogs={setBlogs} addBlog={addBlog} />
