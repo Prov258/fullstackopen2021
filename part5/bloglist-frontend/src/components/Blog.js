@@ -1,7 +1,18 @@
 import React, { useState } from 'react'
+import blogService from '../services/blogs'
 
-const Blog = ({blog}) => {
+const Blog = ({ blog, setBlogs, blogs, showNotification }) => {
   const [visible, setVisible] = useState(false)
+
+  const updateLikes = async () => {
+    try{
+      const updatedBlog = await blogService.update(blog.id, { ...blog, likes: ++blog.likes })
+      setBlogs(blogs.map(b => b.id === updatedBlog.id ? { ...b, likes: updatedBlog.likes } : b))
+    } catch(exception){
+      console.log(exception)
+      showNotification('Something went wrong', 'red')
+    }
+  }
 
   return (
     <div className='blogs__item'>
@@ -9,7 +20,7 @@ const Blog = ({blog}) => {
       {visible
         ? <>
             <div>{blog.url}</div>
-            <div>likes {blog.likes} <button>like</button></div>
+            <div>likes {blog.likes} <button onClick={updateLikes}>like</button></div>
             <div>{blog.user.name}</div>
           </>
         : null 
