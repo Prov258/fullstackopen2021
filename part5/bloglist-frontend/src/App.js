@@ -8,93 +8,93 @@ import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 
 const App = () => {
-  const [ blogs, setBlogs ] = useState([])
-  const [ user, setUser ] = useState(null)
-  const [ username, setUsername ] = useState('')
-  const [ password, setPassword ] = useState('')
-  const [ notification, setNotification ] = useState(null)
+	const [ blogs, setBlogs ] = useState([])
+	const [ user, setUser ] = useState(null)
+	const [ username, setUsername ] = useState('')
+	const [ password, setPassword ] = useState('')
+	const [ notification, setNotification ] = useState(null)
 
-  const blogFormRef = useRef()
+	const blogFormRef = useRef()
 
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [])
+	useEffect(() => {
+		blogService.getAll().then(blogs =>
+			setBlogs( blogs )
+		)
+	}, [])
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if(loggedUserJSON){
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
+	useEffect(() => {
+		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+		if(loggedUserJSON){
+			const user = JSON.parse(loggedUserJSON)
+			setUser(user)
+			blogService.setToken(user.token)
+		}
+	}, [])
 
-  const showNotification = (content, color = "green") => {
-    setNotification({ content, color })
-    setTimeout(() => {
-      setNotification(null)
-    }, 5000)
-  }
+	const showNotification = (content, color = 'green') => {
+		setNotification({ content, color })
+		setTimeout(() => {
+			setNotification(null)
+		}, 5000)
+	}
 
-  const addBlog = async (newBlog) => {
-    const addedBlog = await blogService.create(newBlog)
-    setBlogs(blogs.concat(addedBlog))
-    showNotification(`a new blog ${addedBlog.title} by ${addedBlog.author} added`)
-    blogFormRef.current.toggleVisibility()
-  }
+	const addBlog = async (newBlog) => {
+		const addedBlog = await blogService.create(newBlog)
+		setBlogs(blogs.concat(addedBlog))
+		showNotification(`a new blog ${addedBlog.title} by ${addedBlog.author} added`)
+		blogFormRef.current.toggleVisibility()
+	}
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    
-    try{
-      const user = await loginService.login({
-        username, password
-      })
+	const handleLogin = async (e) => {
+		e.preventDefault()
 
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
-      blogService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch(exception){
-      console.log(exception)
-      showNotification('Wrong credentials', 'red')
-    }
-  }
+		try{
+			const user = await loginService.login({
+				username, password
+			})
 
-  const handleLogout = () => {
-    if(user){
-      window.localStorage.removeItem('loggedBlogappUser')
-      setUser(null)
-    }
-  }
+			window.localStorage.setItem(
+				'loggedBlogappUser', JSON.stringify(user)
+			)
+			blogService.setToken(user.token)
+			setUser(user)
+			setUsername('')
+			setPassword('')
+		} catch(exception){
+			console.log(exception)
+			showNotification('Wrong credentials', 'red')
+		}
+	}
 
-  return (
-    <div>
-      <h1>Blogs</h1>
-      <Notification notification={notification} />
-      {user === null
-        ? <LoginForm 
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            handleLogin={handleLogin}
-          />
-        : <div>
-            <h4>{user.name} logged-in <button onClick={handleLogout}>logout</button></h4>
-            <Togglable buttonLabel='new blog' ref={blogFormRef}>
-              <BlogForm setBlogs={setBlogs} addBlog={addBlog} />
-            </Togglable>
-            <Blogs blogs={blogs} setBlogs={setBlogs} showNotification={showNotification} />
-          </div>
-      }
-    </div>
-  )
+	const handleLogout = () => {
+		if(user){
+			window.localStorage.removeItem('loggedBlogappUser')
+			setUser(null)
+		}
+	}
+
+	return (
+		<div>
+			<h1>Blogs</h1>
+			<Notification notification={notification} />
+			{user === null
+				? <LoginForm
+					username={username}
+					setUsername={setUsername}
+					password={password}
+					setPassword={setPassword}
+					handleLogin={handleLogin}
+				/>
+				: <div>
+					<h4>{user.name} logged-in <button onClick={handleLogout}>logout</button></h4>
+					<Togglable buttonLabel='new blog' ref={blogFormRef}>
+						<BlogForm setBlogs={setBlogs} addBlog={addBlog} />
+					</Togglable>
+					<Blogs blogs={blogs} setBlogs={setBlogs} showNotification={showNotification} />
+				</div>
+			}
+		</div>
+	)
 }
 
 export default App
