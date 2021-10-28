@@ -31,7 +31,7 @@ const Blog = ({ blog, setBlogs, blogs, showNotification }) => {
 
 	return (
 		<div className='blogs__item'>
-			<div>{blog.title} {blog.author} <button onClick={() => setVisible(!visible)}>{visible ? 'hide' : 'view'}</button></div>
+			<div className='blogs__item-header'>{blog.title} {blog.author} <button onClick={() => setVisible(!visible)}>{visible ? 'hide' : 'view'}</button></div>
 			{visible
 				? <>
 					<div>{blog.url}</div>
