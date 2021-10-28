@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, setBlogs, blogs, showNotification }) => {
+const Blog = ({ blog, setBlogs, blogs, showNotification, user }) => {
 	const [visible, setVisible] = useState(false)
-
-	const user = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
 
 	const updateLikes = async () => {
 		try{
@@ -33,12 +31,12 @@ const Blog = ({ blog, setBlogs, blogs, showNotification }) => {
 		<div className='blogs__item'>
 			<div className='blogs__item-header'>{blog.title} {blog.author} <button onClick={() => setVisible(!visible)}>{visible ? 'hide' : 'view'}</button></div>
 			{visible
-				? <>
+				? <div className='blogs__item-info'>
 					<div>{blog.url}</div>
 					<div>likes {blog.likes} <button onClick={updateLikes}>like</button></div>
 					<div>{blog.user.name}</div>
 					{user.username === blog.user.username && <button onClick={deleteBlogHandler}>remove</button>}
-				</>
+				</div>
 				: null
 			}
 		</div>
