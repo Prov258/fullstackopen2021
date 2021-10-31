@@ -10,6 +10,7 @@ const LoginForm = (props) => {
 					<label>
 						<span>username </span>
 						<input
+							id='username'
 							type='text'
 							name='Username'
 							value={props.username}
@@ -21,6 +22,7 @@ const LoginForm = (props) => {
 					<label>
 						<span>password </span>
 						<input
+							id='password'
 							type='password'
 							name='Password'
 							value={props.password}
@@ -28,7 +30,7 @@ const LoginForm = (props) => {
 						/>
 					</label>
 				</div>
-				<button type='submit'>login</button>
+				<button id='login-button' type='submit'>login</button>
 			</form>
 		</>
 	)

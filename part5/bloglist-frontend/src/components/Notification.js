@@ -17,7 +17,7 @@ const Notification = ({ notification }) => {
 		backgroundColor: 'lightgray'
 	}
 
-	return <div style={notificationStyle}>{notification.content}</div>
+	return <div className='error' style={notificationStyle}>{notification.content}</div>
 }
 
 export default Notification
