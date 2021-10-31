@@ -62,14 +62,25 @@ describe('Blog app', function() {
 				cy.contains('blog made by cypress')
 					.contains('view')
 					.click()
-					.parent()
-					.parent()
+					.closest('.blogs__item')
 					.find('.blogs__item-like-btn')
 					.click()
 
 				cy.contains('blog made by cypress')
 					.parent()
 					.contains('likes 1')
+			})
+
+			it('the user who created a blog can delete it', function() {
+				cy.contains('blog made by cypress')
+					.contains('view')
+					.click()
+					.closest('.blogs__item')
+					.contains('remove')
+					.click()
+
+				cy.contains('blog blog made by cypress by vasya123 deleted')
+				cy.get('.blogs').should('not.contain', 'blog made by cypress')
 			})
 		})
 	})
