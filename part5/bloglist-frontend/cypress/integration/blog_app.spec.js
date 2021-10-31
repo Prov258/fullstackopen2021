@@ -31,6 +31,26 @@ describe('Blog app', function() {
 			cy.get('.error')
 				.should('contain', 'Wrong credentials')
 				.and('have.css', 'border-color', 'rgb(255, 0, 0)')
+			cy.get('html').should('not.contain', 'Matti Luukkainen logged in')
+		})
+	})
+
+	describe('When logged in', function() {
+		beforeEach(function() {
+			cy.login({ username: 'vasya', password: 'hardpassword' })
+		})
+
+		it('A blog can be created', function() {
+			cy.contains('new blog').click()
+			cy.get('#title').type('cypress is awesome')
+			cy.get('#author').type('vasya123')
+			cy.get('#url').type('https://www.google.com')
+			cy.get('#create-blog-btn').click()
+
+			cy.get('.error')
+				.should('contain', 'a new blog cypress is awesome by vasya123 added')
+				.and('have.css', 'border-color', 'rgb(0, 128, 0)')
+			cy.contains('cypress is awesome vasya123')
 		})
 	})
 })

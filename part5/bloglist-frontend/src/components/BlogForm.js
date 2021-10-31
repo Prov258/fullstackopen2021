@@ -54,7 +54,7 @@ const BlogForm = (props) => {
 						/>
 					</label>
 				</div>
-				<button type='submit'>create</button>
+				<button id='create-blog-btn' type='submit'>create</button>
 			</form>
 		</>
 	)
