@@ -52,5 +52,25 @@ describe('Blog app', function() {
 				.and('have.css', 'border-color', 'rgb(0, 128, 0)')
 			cy.contains('cypress is awesome vasya123')
 		})
+
+		describe('and a blog exists', function() {
+			beforeEach(function() {
+				cy.createBlog({ title: 'blog made by cypress', author: 'vasya123', url: 'https://www.google.com' })
+			})
+
+			it('user can like a blog', function() {
+				cy.contains('blog made by cypress')
+					.contains('view')
+					.click()
+					.parent()
+					.parent()
+					.find('.blogs__item-like-btn')
+					.click()
+
+				cy.contains('blog made by cypress')
+					.parent()
+					.contains('likes 1')
+			})
+		})
 	})
 })
