@@ -82,6 +82,24 @@ describe('Blog app', function() {
 				cy.contains('blog blog made by cypress by vasya123 deleted')
 				cy.get('.blogs').should('not.contain', 'blog made by cypress')
 			})
+
+			it('blogs are ordered according to likes', function() {
+				cy.createBlog({ title: 'test blog', author: 'vasya123', url: 'https://www.google.com', likes: 2 })
+
+				cy.contains('blog made by cypress')
+					.contains('view')
+					.click()
+					.closest('.blogs__item')
+					.find('.blogs__item-like-btn')
+					.click()
+
+				cy.contains('test blog')
+					.contains('view')
+					.click()
+
+				cy.get('.blogs__item')
+					.then(blogs => cy.wrap(blogs[0]).contains('likes 2'))
+			})
 		})
 	})
 })
