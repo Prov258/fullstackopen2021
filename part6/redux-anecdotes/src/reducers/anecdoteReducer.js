@@ -3,7 +3,7 @@ import anecdoteService from "../services/anecdotes"
 const reducer = (state = [], action) => {
   switch(action.type) {
     case 'VOTE':
-      return state.map(el => el.id === action.data.id ? { ...el, votes: el.votes + 1 } : el)
+      return state.map(el => el.id === action.data.id ? action.data : el)
     case 'NEW_ANECDOTE':
       return state.concat(action.data)
     case 'INIT_ANECDOTES':
@@ -33,10 +33,14 @@ export const createAnecdote = (content) => {
   }
 }
 
-export const voteAnecdote = (id) => {
-  return {
-    type: 'VOTE',
-    data: { id }
+export const voteAnecdote = (anecdote) => {
+  return async dispatch => {
+    const updatedAnecdote = await anecdoteService
+      .update({ ...anecdote, votes: anecdote.votes + 1 })
+    dispatch({
+      type: 'VOTE',
+      data: updatedAnecdote
+    })
   }
 }
 

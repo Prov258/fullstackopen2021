@@ -7,15 +7,15 @@ const AnecdoteForm = () => {
 	const dispatch = useDispatch()
 
 	const addAnecdote = async (e) => {
-    e.preventDefault()
-    const content = e.target['anecdote-input'].value
-	e.target['anecdote-input'].value = ''
-    dispatch(createAnecdote(content))
-	dispatch(notify(`Anecdote '${content}' added`))
-	setTimeout(() => {
-		dispatch(removeNotification())
-	}, 5000)
-  }
+		e.preventDefault()
+		const content = e.target['anecdote-input'].value
+		e.target['anecdote-input'].value = ''
+		dispatch(createAnecdote(content))
+		dispatch(notify(`Anecdote '${content}' added`))
+		setTimeout(() => {
+			dispatch(removeNotification())
+		}, 5000)
+  	}
 
 	return (
 		<>
