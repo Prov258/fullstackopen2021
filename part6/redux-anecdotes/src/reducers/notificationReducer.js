@@ -9,14 +9,23 @@ const reducer = (state = null, action) => {
     }
 }
 
-export const notify = (message) => {
+export const notify = (message, timer = 5) => {
+    return async dispatch => {
+        dispatch(setNotification(message))
+        setTimeout(() => {
+            dispatch(removeNotification())
+        }, timer * 1000)
+    }
+}
+
+const setNotification = (message) => {
     return {
         type: 'NOTIFY',
         data: { message }
     }
 }
 
-export const removeNotification = () => {
+const removeNotification = () => {
     return {
         type: 'REMOVE'
     }
