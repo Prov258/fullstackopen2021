@@ -1,15 +1,14 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { writeFilter } from '../reducers/filterReducer'
 
-const Filter = () => {
+const Filter = (props) => {
     const style = {
         marginBottom: 10
     }
-    const dispatch = useDispatch()
 
     const filterHandler = (e) => {
-        dispatch(writeFilter(e.target.value))
+        props.writeFilter(e.target.value)
     }
 
     return (
@@ -20,4 +19,7 @@ const Filter = () => {
     )
 }
 
-export default Filter
+export default connect(
+    null,
+    { writeFilter }
+)(Filter)
